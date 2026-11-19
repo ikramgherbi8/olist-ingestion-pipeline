@@ -1,2 +1,2 @@
 # olist-ingestion-pipeline
-An automated, incremental ingestion and refinement pipeline on an on-premise big data stack
+Automated, incremental lakehouse ingestion: Airflow, NiFi, HDFS, Spark, Iceberg, Great Expectations
