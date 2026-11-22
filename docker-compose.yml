@@ -1,0 +1,26 @@
+name: olist
+
+services:
+  namenode:
+    image: bde2020/hadoop-namenode:2.0.0-hadoop2.7.4-java8
+    environment:
+      - CLUSTER_NAME=olist
+    env_file: ./hadoop.env
+    volumes:
+      - namenode:/hadoop/dfs/name
+    ports:
+      - "50070:50070"
+
+  datanode:
+    image: bde2020/hadoop-datanode:2.0.0-hadoop2.7.4-java8
+    env_file: ./hadoop.env
+    environment:
+      SERVICE_PRECONDITION: "namenode:50070"
+    volumes:
+      - datanode:/hadoop/dfs/data
+    depends_on:
+      - namenode
+
+volumes:
+  namenode:
+  datanode:
