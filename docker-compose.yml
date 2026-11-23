@@ -21,6 +21,28 @@ services:
     depends_on:
       - namenode
 
+  hive-metastore-postgresql:
+    image: bde2020/hive-metastore-postgresql:2.3.0
+    volumes:
+      - metastore_db:/var/lib/postgresql/data
+
+  hive-metastore:
+    image: bde2020/hive:2.3.2-postgresql-metastore
+    env_file:
+      - ./hadoop.env
+      - ./hive.env
+    environment:
+      HIVE_SITE_CONF_javax_jdo_option_ConnectionPassword: ${HIVE_DB_PASSWORD}
+      SERVICE_PRECONDITION: "namenode:50070 datanode:50075 hive-metastore-postgresql:5432"
+    command: /opt/hive/bin/hive --service metastore
+    depends_on:
+      - namenode
+      - datanode
+      - hive-metastore-postgresql
+    ports:
+      - "9083:9083"
+
 volumes:
   namenode:
   datanode:
+  metastore_db:
