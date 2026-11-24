@@ -1,0 +1,5 @@
+.env
+jars/
+data/
+docs/*.pdf
+logs/
