@@ -57,7 +57,7 @@ services:
     ports:
       - "9083:9083"
   spark-master:
-    image: apache/spark:3.5.7
+    image: apache/spark:3.5.7-java17
     command: /opt/spark/bin/spark-class org.apache.spark.deploy.master.Master
     volumes:
       - ./jars/iceberg-spark-runtime-3.5_2.12-1.11.0.jar:/opt/spark/jars/iceberg-spark-runtime-3.5_2.12-1.11.0.jar
@@ -66,7 +66,7 @@ services:
       - "7077:7077"
 
   spark-worker:
-    image: apache/spark:3.5.7
+    image: apache/spark:3.5.7-java17
     command: /opt/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
     environment:
       SPARK_WORKER_CORES: 2
